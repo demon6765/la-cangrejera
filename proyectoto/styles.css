@@ -1,0 +1,1178 @@
+/* Estilos personalizados para el Sistema de Gestión de Cangrejas */
+
+/* Variables CSS personalizadas */
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --success-color: #27ae60;
+    --warning-color: #f39c12;
+    --danger-color: #e74c3c;
+    --info-color: #17a2b8;
+    --light-bg: #ecf0f1;
+    --dark-bg: #2c3e50;
+    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --gradient-secondary: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    --shadow-light: 0 5px 15px rgba(0, 0, 0, 0.1);
+    --shadow-medium: 0 10px 25px rgba(0, 0, 0, 0.15);
+    --shadow-heavy: 0 15px 35px rgba(0, 0, 0, 0.2);
+    --border-radius: 15px;
+    --transition: all 0.3s ease;
+    --text-dark: #2c3e50;
+    --text-light: #ffffff;
+    --text-muted: #6c757d;
+    --text-success: #27ae60;
+    --text-warning: #f39c12;
+    --text-danger: #e74c3c;
+    --text-info: #17a2b8;
+}
+
+/* Estilos generales */
+body {
+    background: var(--gradient-primary);
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
+    color: var(--text-dark);
+}
+
+/* Contenedores principales */
+.login-container,
+.main-container {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-heavy);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.main-container {
+    margin-top: 20px;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Animaciones */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Tarjetas de fases */
+.phase-card {
+    transition: var(--transition);
+    border: none;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    position: relative;
+    background: white;
+    box-shadow: var(--shadow-light);
+}
+
+.phase-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.phase-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--gradient-secondary);
+}
+
+.phase-header {
+    background: var(--gradient-secondary);
+    color: var(--text-light);
+    padding: 25px 20px;
+    text-align: center;
+    position: relative;
+}
+
+.phase-header::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid var(--secondary-color);
+}
+
+/* Niveles de seguridad */
+.security-level {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(0, 0, 0, 0.8);
+    color: var(--text-light);
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Navegación */
+.navbar-custom {
+    background: var(--gradient-secondary);
+    box-shadow: var(--shadow-light);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--text-light) !important;
+}
+
+.navbar-nav .nav-link {
+    color: var(--text-light) !important;
+}
+
+.navbar-nav .nav-link:hover {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Botones personalizados */
+.btn-custom {
+    background: var(--gradient-secondary);
+    border: none;
+    color: var(--text-light);
+    border-radius: 25px;
+    padding: 12px 30px;
+    transition: var(--transition);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-custom:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+    color: var(--text-light);
+}
+
+.btn-custom:active {
+    transform: translateY(0);
+}
+
+.btn-custom:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Formularios */
+.form-control-custom {
+    border-radius: 10px;
+    border: 2px solid #e9ecef;
+    transition: var(--transition);
+    padding: 12px 15px;
+    font-size: 1rem;
+    color: var(--text-dark);
+    background-color: #ffffff;
+}
+
+.form-control-custom:focus {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+    transform: translateY(-1px);
+    color: var(--text-dark);
+}
+
+.form-control-custom:invalid {
+    border-color: var(--danger-color);
+}
+
+.form-label {
+    color: var(--text-light);
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 1rem;
+}
+
+/* Mejorar visibilidad de todos los elementos de texto */
+label {
+    color: var(--text-light) !important;
+    font-weight: 600 !important;
+    font-size: 1rem !important;
+}
+
+.form-text {
+    color: var(--text-muted) !important;
+    font-size: 0.875rem !important;
+}
+
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+/* Mejorar visibilidad de elementos de formulario */
+.form-select {
+    color: var(--text-dark) !important;
+    background-color: #ffffff !important;
+}
+
+.form-select:focus {
+    color: var(--text-dark) !important;
+    background-color: #ffffff !important;
+}
+
+textarea {
+    color: var(--text-dark) !important;
+    background-color: #ffffff !important;
+}
+
+textarea:focus {
+    color: var(--text-dark) !important;
+    background-color: #ffffff !important;
+}
+
+/* Mejorar visibilidad de elementos de interfaz */
+.card-title {
+    color: var(--text-dark) !important;
+    font-weight: 700 !important;
+}
+
+.card-text {
+    color: var(--text-dark) !important;
+}
+
+.modal-title {
+    color: var(--text-light) !important;
+    font-weight: 700 !important;
+}
+
+.modal-body {
+    color: var(--text-dark) !important;
+}
+
+.modal-body label {
+    color: var(--text-light) !important;
+    font-weight: 600 !important;
+}
+
+.modal-body .form-label {
+    color: var(--text-light) !important;
+    font-weight: 600 !important;
+}
+
+/* Mejorar visibilidad de elementos de navegación */
+.nav-link {
+    color: var(--text-light) !important;
+}
+
+.nav-link:hover {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.dropdown-item {
+    color: var(--text-dark) !important;
+}
+
+.dropdown-item:hover {
+    color: var(--text-dark) !important;
+    background-color: var(--light-bg) !important;
+}
+
+/* Mejorar visibilidad de elementos de tabla */
+.table th {
+    color: var(--text-light) !important;
+    font-weight: 600 !important;
+}
+
+.table td {
+    color: var(--text-dark) !important;
+}
+
+/* Mejorar visibilidad de elementos de alerta */
+.alert {
+    color: var(--text-dark) !important;
+}
+
+.alert-info {
+    color: #0c5460 !important;
+    background-color: #d1ecf1 !important;
+    border-color: #bee5eb !important;
+}
+
+.alert-success {
+    color: #155724 !important;
+    background-color: #d4edda !important;
+    border-color: #c3e6cb !important;
+}
+
+.alert-warning {
+    color: #856404 !important;
+    background-color: #fff3cd !important;
+    border-color: #ffeaa7 !important;
+}
+
+.alert-danger {
+    color: #721c24 !important;
+    background-color: #f8d7da !important;
+    border-color: #f5c6cb !important;
+}
+
+/* Mejorar visibilidad de elementos de botones */
+.btn {
+    color: var(--text-light) !important;
+    font-weight: 500 !important;
+}
+
+.btn-outline-primary {
+    color: var(--secondary-color) !important;
+    border-color: var(--secondary-color) !important;
+}
+
+.btn-outline-primary:hover {
+    color: var(--text-light) !important;
+    background-color: var(--secondary-color) !important;
+}
+
+.btn-outline-secondary {
+    color: var(--text-muted) !important;
+    border-color: var(--text-muted) !important;
+}
+
+.btn-outline-secondary:hover {
+    color: var(--text-light) !important;
+    background-color: var(--text-muted) !important;
+}
+
+/* Mejorar visibilidad de elementos de lista */
+.list-group-item {
+    color: var(--text-dark) !important;
+    background-color: #ffffff !important;
+}
+
+.list-group-item-action:hover {
+    color: var(--text-dark) !important;
+    background-color: var(--light-bg) !important;
+}
+
+/* Mejorar visibilidad de elementos de progreso */
+.progress-bar {
+    color: var(--text-light) !important;
+    font-weight: 600 !important;
+}
+
+/* Mejorar visibilidad de elementos de tooltip */
+.tooltip-inner {
+    color: var(--text-light) !important;
+    background-color: var(--dark-bg) !important;
+}
+
+/* Mejorar visibilidad de elementos de popover */
+.popover-header {
+    color: var(--text-dark) !important;
+    background-color: var(--light-bg) !important;
+}
+
+.popover-body {
+    color: var(--text-dark) !important;
+    background-color: #ffffff !important;
+}
+
+/* Mejorar visibilidad de elementos de formulario en modales */
+.modal .form-control,
+.modal .form-select,
+.modal textarea {
+    color: var(--text-dark) !important;
+    background-color: #ffffff !important;
+}
+
+.modal .form-control:focus,
+.modal .form-select:focus,
+.modal textarea:focus {
+    color: var(--text-dark) !important;
+    background-color: #ffffff !important;
+}
+
+/* Mejorar visibilidad de elementos de formulario en cards */
+.card .form-control,
+.card .form-select,
+.card textarea {
+    color: var(--text-dark) !important;
+    background-color: #ffffff !important;
+}
+
+.card .form-control:focus,
+.card .form-select:focus,
+.card textarea:focus {
+    color: var(--text-dark) !important;
+    background-color: #ffffff !important;
+}
+
+/* Mejorar visibilidad de elementos de formulario en cualquier contexto */
+.form-control,
+.form-select,
+textarea,
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"] {
+    color: var(--text-dark) !important;
+    background-color: #ffffff !important;
+}
+
+.form-control:focus,
+.form-select:focus,
+textarea:focus,
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="date"]:focus,
+input[type="time"]:focus,
+input[type="datetime-local"]:focus {
+    color: var(--text-dark) !important;
+    background-color: #ffffff !important;
+}
+
+/* Asegurar que todos los labels sean visibles */
+label,
+.form-label,
+.col-form-label {
+    color: var(--text-light) !important;
+    font-weight: 600 !important;
+    font-size: 1rem !important;
+}
+
+/* Asegurar que todos los textos de ayuda sean visibles */
+.form-text,
+.help-text,
+.small {
+    color: var(--text-muted) !important;
+    font-size: 0.875rem !important;
+}
+
+/* Asegurar que todos los placeholders sean visibles */
+::placeholder {
+    color: var(--text-muted) !important;
+    opacity: 0.7 !important;
+}
+
+/* Asegurar que todos los textos de opciones sean visibles */
+option {
+    color: var(--text-dark) !important;
+    background-color: #ffffff !important;
+}
+
+/* Asegurar que todos los textos de párrafos sean visibles */
+p {
+    color: var(--text-dark) !important;
+}
+
+/* Asegurar que todos los textos de encabezados sean visibles */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-dark) !important;
+}
+
+/* Excepción para encabezados en modales y navbar */
+.modal-header h1,
+.modal-header h2,
+.modal-header h3,
+.modal-header h4,
+.modal-header h5,
+.modal-header h6,
+.navbar h1,
+.navbar h2,
+.navbar h3,
+.navbar h4,
+.navbar h5,
+.navbar h6 {
+    color: var(--text-light) !important;
+}
+
+/* Tablas */
+.table-custom {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: var(--shadow-light);
+    border: none;
+}
+
+.table-custom thead th {
+    background: var(--dark-bg);
+    color: var(--text-light);
+    border: none;
+    padding: 15px;
+    font-weight: 600;
+}
+
+.table-custom tbody tr {
+    transition: var(--transition);
+}
+
+.table-custom tbody tr:hover {
+    background-color: rgba(52, 152, 219, 0.1);
+    transform: scale(1.01);
+}
+
+.table-custom tbody td {
+    color: var(--text-dark);
+    vertical-align: middle;
+}
+
+/* Modales */
+.modal-custom .modal-content {
+    border-radius: var(--border-radius);
+    border: none;
+    box-shadow: var(--shadow-heavy);
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
+.modal-custom .modal-header {
+    background: var(--gradient-secondary);
+    color: var(--text-light);
+    border-bottom: none;
+    padding: 20px 25px;
+}
+
+.modal-custom .modal-body {
+    padding: 25px;
+    color: var(--text-dark);
+}
+
+.modal-custom .modal-footer {
+    border-top: 1px solid #e9ecef;
+    padding: 20px 25px;
+}
+
+/* Badges y estados */
+.status-badge {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge-success {
+    background: var(--success-color);
+    color: var(--text-light);
+}
+
+.badge-warning {
+    background: var(--warning-color);
+    color: var(--text-dark);
+}
+
+.badge-danger {
+    background: var(--danger-color);
+    color: var(--text-light);
+}
+
+.badge-info {
+    background: var(--info-color);
+    color: var(--text-light);
+}
+
+/* Tarjetas de estadísticas */
+.stats-card {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 25px;
+    text-align: center;
+    box-shadow: var(--shadow-light);
+    transition: var(--transition);
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.stats-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--gradient-secondary);
+}
+
+.stats-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-medium);
+}
+
+.stats-card .icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    opacity: 0.8;
+}
+
+.stats-card .number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: var(--text-dark);
+}
+
+.stats-card .label {
+    font-size: 1rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* Alertas personalizadas */
+.alert-custom {
+    border-radius: 10px;
+    border: none;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-light);
+    animation: slideInRight 0.3s ease-out;
+}
+
+.alert-custom .alert-icon {
+    font-size: 1.2rem;
+    margin-right: 10px;
+}
+
+/* Estilos específicos para cálculos de materia prima */
+.yield-calculation {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 15px 0;
+    border-left: 4px solid var(--info-color);
+    box-shadow: var(--shadow-light);
+}
+
+.yield-calculation h6 {
+    color: var(--text-dark);
+    font-weight: 700;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.yield-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.yield-item:last-child {
+    border-bottom: none;
+}
+
+.yield-label {
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.yield-value {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.yield-value.special { color: var(--info-color); }
+.yield-value.super-lump { color: var(--success-color); }
+.yield-value.jumbo { color: var(--warning-color); }
+.yield-value.claw-meat { color: var(--danger-color); }
+.yield-value.total { color: var(--primary-color); }
+.yield-value.waste { color: var(--text-muted); }
+
+.yield-percentage {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* Estilos para el cálculo automático */
+.auto-calculation {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    border: 2px solid var(--info-color);
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px 0;
+    animation: pulse 2s infinite;
+}
+
+.auto-calculation h6 {
+    color: var(--text-dark);
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.calculation-result {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--info-color);
+    text-align: center;
+    padding: 10px;
+    background: rgba(255,255,255,0.8);
+    border-radius: 8px;
+    margin: 5px 0;
+}
+
+/* Loading spinner */
+.loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .login-container {
+        margin: 20px;
+        padding: 30px 20px;
+    }
+    
+    .main-container {
+        margin: 10px;
+        padding: 20px 15px;
+    }
+    
+    .phase-card {
+        margin-bottom: 20px;
+    }
+    
+    .stats-card {
+        margin-bottom: 15px;
+    }
+    
+    .btn-custom {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+    
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .phase-header {
+        padding: 20px 15px;
+    }
+    
+    .phase-header h4 {
+        font-size: 1.2rem;
+    }
+    
+    .modal-custom .modal-body {
+        padding: 20px 15px;
+    }
+    
+    .table-responsive {
+        font-size: 0.9rem;
+    }
+}
+
+/* Efectos especiales */
+.glow-effect {
+    position: relative;
+}
+
+.glow-effect::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: var(--gradient-secondary);
+    border-radius: inherit;
+    z-index: -1;
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.glow-effect:hover::after {
+    opacity: 0.3;
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
+}
+
+/* Tooltips personalizados */
+.tooltip-custom {
+    position: relative;
+    cursor: help;
+}
+
+.tooltip-custom::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--dark-bg);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+    z-index: 1000;
+}
+
+.tooltip-custom:hover::before {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Efectos de hover para iconos */
+.fas, .far, .fab {
+    transition: var(--transition);
+}
+
+.fas:hover, .far:hover, .fab:hover {
+    transform: scale(1.1);
+}
+
+/* Estilos para formularios de validación */
+.form-control-custom.is-valid {
+    border-color: var(--success-color);
+    box-shadow: 0 0 0 0.2rem rgba(39, 174, 96, 0.25);
+}
+
+.form-control-custom.is-invalid {
+    border-color: var(--danger-color);
+    box-shadow: 0 0 0 0.2rem rgba(231, 76, 60, 0.25);
+}
+
+.invalid-feedback {
+    color: var(--danger-color);
+    font-size: 0.875rem;
+    margin-top: 5px;
+}
+
+.valid-feedback {
+    color: var(--success-color);
+    font-size: 0.875rem;
+    margin-top: 5px;
+}
+
+/* Estilos para el modo oscuro (futuro) */
+[data-theme="dark"] {
+    --light-bg: #2c3e50;
+    --dark-bg: #1a252f;
+}
+
+/* Animaciones de entrada para elementos */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Estilos para el footer */
+.footer {
+    background: var(--dark-bg);
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 50px;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+.footer a {
+    color: var(--secondary-color);
+    text-decoration: none;
+}
+
+.footer a:hover {
+    color: var(--primary-color);
+}
+
+/* Estilos para accesibilidad de modales */
+/* Mejorar el foco en modales */
+.modal .btn-close:focus {
+    box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.5);
+    outline: none;
+}
+
+.modal input:focus,
+.modal select:focus,
+.modal textarea:focus {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+    outline: none;
+}
+
+.modal button:focus {
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+    outline: none;
+}
+
+/* Mejorar la accesibilidad del modal backdrop */
+.modal-backdrop {
+    pointer-events: auto;
+}
+
+/* Asegurar que el contenido del modal sea accesible */
+.modal-content {
+    outline: none;
+}
+
+/* Mejorar el contraste para accesibilidad */
+.modal-header {
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.modal-footer {
+    border-top: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para elementos con foco visible */
+*:focus-visible {
+    outline: 2px solid var(--secondary-color);
+    outline-offset: 2px;
+}
+
+/* Asegurar que los botones de cierre sean accesibles */
+.btn-close {
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+
+.btn-close:hover,
+.btn-close:focus {
+    opacity: 1;
+}
+
+/* Mejorar la accesibilidad de las tablas en modales */
+.modal .table th {
+    background-color: var(--dark-bg);
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+.modal .table td {
+    vertical-align: middle;
+    color: var(--text-dark);
+}
+
+/* Asegurar que los formularios en modales sean accesibles */
+.modal form label {
+    font-weight: 500;
+    color: var(--text-light);
+}
+
+.modal form .form-control:focus,
+.modal form .form-select:focus {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+}
+
+/* Mejorar la accesibilidad de los badges en modales */
+.modal .badge {
+    font-size: 0.875em;
+    padding: 0.5em 0.75em;
+}
+
+/* Asegurar que los alertas en modales sean accesibles */
+.modal .alert {
+    border-left: 4px solid;
+    padding-left: 1rem;
+}
+
+.modal .alert-info {
+    border-left-color: var(--info-color);
+}
+
+.modal .alert-success {
+    border-left-color: var(--success-color);
+}
+
+.modal .alert-warning {
+    border-left-color: var(--warning-color);
+}
+
+.modal .alert-danger {
+    border-left-color: var(--danger-color);
+}
+
+/* Mejorar la accesibilidad de los botones en modales */
+.modal .btn {
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.modal .btn:hover {
+    transform: translateY(-1px);
+}
+
+.modal .btn:active {
+    transform: translateY(0);
+}
+
+/* Asegurar que los tooltips sean accesibles */
+.modal [data-bs-toggle="tooltip"] {
+    cursor: help;
+}
+
+/* Mejorar la accesibilidad de los dropdowns en modales */
+.modal .dropdown-menu {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-medium);
+}
+
+.modal .dropdown-item:hover,
+.modal .dropdown-item:focus {
+    background-color: var(--light-bg);
+}
+
+/* Asegurar que los checkboxes y radios sean accesibles */
+.modal .form-check-input:focus {
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+}
+
+/* Mejorar la accesibilidad de los textareas */
+.modal textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Asegurar que los selects sean accesibles */
+.modal select option {
+    padding: 0.5rem;
+}
+
+/* Mejorar la accesibilidad de los inputs numéricos */
+.modal input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.modal input[type="number"]::-webkit-outer-spin-button,
+.modal input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Asegurar que los modales sean responsivos */
+@media (max-width: 768px) {
+    .modal-dialog {
+        margin: 0.5rem;
+    }
+    
+    .modal-content {
+        border-radius: 0.5rem;
+    }
+    
+    .modal-header {
+        padding: 1rem;
+    }
+    
+    .modal-body {
+        padding: 1rem;
+    }
+    
+    .modal-footer {
+        padding: 1rem;
+    }
+}
+
+/* Mejorar la accesibilidad en modo oscuro */
+@media (prefers-color-scheme: dark) {
+    .modal-content {
+        background-color: #2c3e50;
+        color: #ecf0f1;
+    }
+    
+    .modal-header {
+        border-bottom-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .modal-footer {
+        border-top-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .modal .form-control,
+    .modal .form-select {
+        background-color: #34495e;
+        border-color: #7f8c8d;
+        color: #ecf0f1;
+    }
+    
+    .modal .form-control:focus,
+    .modal .form-select:focus {
+        background-color: #34495e;
+        border-color: var(--secondary-color);
+        color: #ecf0f1;
+    }
+} 

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Sistema de Gestión de Cangrejas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --light-bg: #ecf0f1;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-custom {
+            background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+            border: none;
+            color: white;
+            border-radius: 25px;
+            padding: 10px 25px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            color: white;
+        }
+        
+        .form-control-custom {
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control-custom:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+        }
+        
+        .code-display {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 1.1em;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background-color: #f8f9fa;
+        }
+        
+        .security-codes-card {
+            transition: all 0.3s ease;
+        }
+        
+        .security-codes-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Register Screen -->
+    <div id="registerScreen" class="container-fluid d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+        <div class="login-container p-5" style="max-width: 450px; width: 100%;">
+            <div class="text-center mb-4">
+                <i class="fas fa-user-plus fa-3x text-primary mb-3"></i>
+                <h2 class="text-primary">Registro de Usuario</h2>
+                <h5 class="text-muted">Sistema de Gestión de Cangrejas</h5>
+            </div>
+            
+            <form id="newUserForm">
+                <div class="mb-3">
+                    <label for="newUsername" class="form-label">Nombre de Usuario</label>
+                    <input type="text" class="form-control form-control-custom" id="newUsername" required>
+                </div>
+                <div class="mb-3">
+                    <label for="newPassword" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control form-control-custom" id="newPassword" required>
+                </div>
+                <div class="mb-3">
+                    <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
+                    <input type="password" class="form-control form-control-custom" id="confirmPassword" required>
+                </div>
+                <div class="mb-3">
+                    <label for="newSecurityLevel" class="form-label">Rol de Usuario</label>
+                    <select class="form-select form-control-custom" id="newSecurityLevel" required>
+                        <option value="">Seleccionar rol</option>
+                        <option value="operador">Operador Receptor</option>
+                        <option value="supervisor">Supervisor de Calidad</option>
+                        <option value="gerente">Gerente de Proceso</option>
+                        <option value="admin">Administrador</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="securityCode" class="form-label">Código de Seguridad</label>
+                    <input type="text" class="form-control form-control-custom" id="securityCode" placeholder="Consulte el código en Presidencia" required>
+                    <div class="form-text">
+                        <small class="text-muted">
+                            <i class="fas fa-shield-alt me-1"></i>
+                            Código único proporcionado por Presidencia para su rol
+                        </small>
+                    </div>
+                </div>
+                
+                <!-- Información sobre códigos de seguridad -->
+                <div class="mb-3">
+                    <div class="alert alert-warning border-warning">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-exclamation-triangle me-3 fa-lg text-warning"></i>
+                            <div>
+                                <strong>Información Importante:</strong><br>
+                                <small class="text-muted">
+                                    Los códigos de seguridad son únicos para cada rol y deben ser consultados en <strong>Presidencia</strong> antes del registro.
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-custom w-100">Registrarse</button>
+            </form>
+            
+            <div class="text-center mt-3">
+                <small class="text-muted">Sistema de Gestión Integral de Cangrejas</small>
+            </div>
+            
+            <hr class="my-4">
+            
+            <div class="text-center">
+                <button type="button" class="btn btn-outline-secondary" onclick="goToLogin()">
+                    <i class="fas fa-arrow-left me-2"></i>Volver al Login
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="config.js"></script>
+    <script src="registro-script.js"></script>
+</body>
+</html> 

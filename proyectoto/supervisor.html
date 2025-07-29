@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supervisor de Calidad - Sistema Cangrejas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-crab me-2"></i>
+                Sistema Cangrejas - Supervisor
+            </a>
+            <div class="navbar-nav ms-auto">
+                <span class="navbar-text me-3">
+                    <i class="fas fa-user me-1"></i>
+                    <span id="currentUser"></span>
+                    <span class="badge bg-light text-dark ms-2">Supervisor</span>
+                </span>
+                <button class="btn btn-outline-light btn-sm" onclick="logout()">
+                    <i class="fas fa-sign-out-alt me-1"></i>
+                    Cerrar Sesión
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Supervisor -->
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="main-container p-4">
+                    <h2 class="text-center mb-4">
+                        <i class="fas fa-clipboard-list me-2"></i>
+                        Panel de Supervisor de Calidad
+                    </h2>
+                    
+                    <!-- Estadísticas del Supervisor -->
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="card text-center bg-primary text-white">
+                                <div class="card-body">
+                                    <i class="fas fa-boxes fa-2x mb-2"></i>
+                                    <h5>Contenedores Recibidos</h5>
+                                    <h3 id="totalReceived">0</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-center bg-success text-white">
+                                <div class="card-body">
+                                    <i class="fas fa-fire fa-2x mb-2"></i>
+                                    <h5>En Procesamiento</h5>
+                                    <h3 id="inProcessing">0</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-center bg-warning text-white">
+                                <div class="card-body">
+                                    <i class="fas fa-check-circle fa-2x mb-2"></i>
+                                    <h5>Completados</h5>
+                                    <h3 id="completed">0</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-center bg-danger text-white">
+                                <div class="card-body">
+                                    <i class="fas fa-times-circle fa-2x mb-2"></i>
+                                    <h5>Rechazados</h5>
+                                    <h3 id="rejected">0</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fases Disponibles -->
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="card phase-card">
+                                <div class="security-level">Nivel 1</div>
+                                <div class="phase-header">
+                                    <i class="fas fa-clipboard-check fa-2x mb-2"></i>
+                                    <h4>Fase 1: Recepción</h4>
+                                    <p class="mb-0">Clasificación y Supervisión</p>
+                                </div>
+                                <div class="card-body">
+                                    <p class="text-muted">Revisión de contenedores recibidos</p>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-check text-success me-2"></i>Verificar clasificación</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Control de calidad</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Validar datos</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Aprobar para procesamiento</li>
+                                    </ul>
+                                    <button class="btn btn-custom w-100" onclick="openPhase1()">
+                                        <i class="fas fa-eye me-2"></i>Revisar Recepciones
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-4">
+                            <div class="card phase-card">
+                                <div class="security-level">Nivel 2</div>
+                                <div class="phase-header">
+                                    <i class="fas fa-fire fa-2x mb-2"></i>
+                                    <h4>Fase 2: Procesamiento</h4>
+                                    <p class="mb-0">Control de Calidad</p>
+                                </div>
+                                <div class="card-body">
+                                    <p class="text-muted">Supervisión del procesamiento</p>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-check text-success me-2"></i>Control de temperatura</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Verificar rendimiento</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Validar calidad final</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Aprobar para exportación</li>
+                                    </ul>
+                                    <button class="btn btn-custom w-100" onclick="openPhase2()">
+                                        <i class="fas fa-edit me-2"></i>Gestionar Procesamiento
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-4">
+                            <div class="card phase-card">
+                                <div class="security-level">Nivel 3</div>
+                                <div class="phase-header">
+                                    <i class="fas fa-cut fa-2x mb-2"></i>
+                                    <h4>Fase 3: Separación de Carne</h4>
+                                    <p class="mb-0">Cálculo de Rendimiento</p>
+                                </div>
+                                <div class="card-body">
+                                    <p class="text-muted">Separación y clasificación automática</p>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-check text-success me-2"></i>Separación de carne</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Cálculo de rendimiento</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Clasificación automática</li>
+                                        <li><i class="fas fa-check text-success me-2"></i>Validación final</li>
+                                    </ul>
+                                    <button class="btn btn-custom w-100" onclick="openPhase3()">
+                                        <i class="fas fa-calculator me-2"></i>Separación y Clasificación
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Acciones Rápidas del Supervisor -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header bg-warning text-white">
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-tools me-2"></i>
+                                        Acciones Rápidas - Control de Calidad
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h6>Acciones Rápidas</h6>
+                                            <div class="d-grid gap-2">
+                                                <button class="btn btn-outline-primary" onclick="openPhase1()">
+                                                    <i class="fas fa-eye me-2"></i>Revisar Recepciones
+                                                </button>
+                                                <button class="btn btn-outline-success" onclick="openPhase2()">
+                                                    <i class="fas fa-edit me-2"></i>Gestionar Procesamiento
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6>Acciones de Fase 2</h6>
+                                            <!-- Menú desplegable para acciones de Fase 2 -->
+                                            <div class="dropdown">
+                                                <button class="btn btn-primary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fas fa-cogs me-2"></i>Acciones de Fase 2
+                                                </button>
+                                                <ul class="dropdown-menu w-100">
+                                                    <li><a class="dropdown-item" href="#" onclick="forcePhase2Access()">
+                                                        <i class="fas fa-rocket me-2"></i>FORZAR ACCESO FASE 2
+                                                    </a></li>
+                                                    <li><a class="dropdown-item" href="#" onclick="resetAndCreateTestData()">
+                                                        <i class="fas fa-refresh me-2"></i>Reiniciar y Crear Datos
+                                                    </a></li>
+                                                    <li><a class="dropdown-item" href="#" onclick="bulkApproveAll()">
+                                                        <i class="fas fa-check-double me-2"></i>Aprobar Todos los Contenedores
+                                                    </a></li>
+                                                    <li><a class="dropdown-item" href="#" onclick="emergencyPhase2Access()">
+                                                        <i class="fas fa-exclamation-triangle me-2"></i>Acceso de Emergencia
+                                                    </a></li>
+                                                    <li><a class="dropdown-item" href="#" onclick="createTestData()">
+                                                        <i class="fas fa-plus-circle me-2"></i>Crear Datos de Prueba
+                                                    </a></li>
+                                                    <li><hr class="dropdown-divider"></li>
+                                                    <li><a class="dropdown-item" href="#" onclick="diagnosePhase2Issue()">
+                                                        <i class="fas fa-stethoscope me-2"></i>Diagnosticar Fase 2
+                                                    </a></li>
+                                                    <li><a class="dropdown-item" href="#" onclick="diagnoseContainerApproval()">
+                                                        <i class="fas fa-search me-2"></i>Diagnosticar Aprobación
+                                                    </a></li>
+                                                    <li><a class="dropdown-item" href="#" onclick="fixContainerApproval()">
+                                                        <i class="fas fa-wrench me-2"></i>Arreglar Aprobación
+                                                    </a></li>
+                                                    <li><a class="dropdown-item" href="#" onclick="testCompleteWorkflow()">
+                                                        <i class="fas fa-play me-2"></i>Probar Flujo Completo
+                                                    </a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tabla de Control de Calidad -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header bg-success text-white">
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-clipboard-list me-2"></i>
+                                        Control de Calidad
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-custom">
+                                            <thead class="table-dark">
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Contenedor</th>
+                                                    <th>Proveedor</th>
+                                                    <th>Fase</th>
+                                                    <th>Estado</th>
+                                                    <th>Calidad</th>
+                                                    <th>Supervisor</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="qualityControlTable">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Phase 1 Review Modal -->
+<div class="modal fade" id="phase1ReviewModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content modal-custom">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title">
+            <i class="fas fa-clipboard-check me-2"></i> Revisión de Recepciones
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <div class="table-responsive">
+            <table class="table table-custom">
+              <thead class="table-dark">
+                <tr>
+                  <th>Contenedor</th>
+                  <th>Proveedor</th>
+                  <th>Tipo</th>
+                  <th>Peso</th>
+                  <th>Estado</th>
+                  <th>Clasificación</th>
+                  <th>Operador</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="phase1ReviewTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Phase 2 Modal -->
+  <div class="modal fade" id="phase2Modal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content modal-custom">
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title">
+            <i class="fas fa-fire me-2"></i> Fase 2: Procesamiento
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <form id="phase2Form">
+            <div class="row">
+              <!-- Cooking Section -->
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="containerId2" class="form-label">Contenedor ID</label>
+                  <input type="text" class="form-control form-control-custom" id="containerId2" readonly>
+                </div>
+                <div class="mb-3">
+                  <label for="cookingTemp" class="form-label">Temperatura de Cocción (°C)</label>
+                  <input type="number" class="form-control form-control-custom" id="cookingTemp" required>
+                </div>
+                <div class="mb-3">
+                  <label for="cookingTime" class="form-label">Tiempo de Cocción (min)</label>
+                  <input type="number" class="form-control form-control-custom" id="cookingTime" required>
+                </div>
+                <div class="mb-3">
+                  <label for="coolingTemp" class="form-label">Temperatura de Enfriamiento (°C)</label>
+                  <input type="number" class="form-control form-control-custom" id="coolingTemp" required>
+                </div>
+              </div>
+  
+              <!-- Quality Section -->
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="finalQuality" class="form-label">Calidad Final</label>
+                  <select class="form-select form-control-custom" id="finalQuality" required>
+                    <option value="">Seleccionar calidad</option>
+                    <option value="A">Clase A</option>
+                    <option value="B">Clase B</option>
+                    <option value="C">Clase C</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="processStatus" class="form-label">Estado del Proceso</label>
+                  <select class="form-select form-control-custom" id="processStatus" required>
+                    <option value="">Seleccionar estado</option>
+                    <option value="en_proceso">En Proceso</option>
+                    <option value="completado">Completado</option>
+                    <option value="rechazado">Rechazado</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+  
+            <!-- Meat Separation -->
+            <div class="card mb-3">
+              <div class="card-header bg-success text-white">
+                <h5 class="mb-0"><i class="fas fa-cut me-2"></i> Separación de Carne - Estación de Procesamiento</h5>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <!-- Left Side -->
+                  <div class="col-md-6">
+                    <!-- SPECIAL -->
+                    <div class="mb-3">
+                      <label for="specialMeat" class="form-label">
+                        <i class="fas fa-star text-warning me-1"></i> SPECIAL (kg)
+                      </label>
+                      <input type="number" step="0.1" class="form-control form-control-custom" id="specialMeat" value="15.0" required>
+                      <small class="text-muted">Carne blanca en piezas pequeñas y escamosas</small>
+                    </div>
+                    <!-- SUPER LUMP -->
+                    <div class="mb-3">
+                      <label for="superLumpMeat" class="form-label">
+                        <i class="fas fa-star text-warning me-1"></i> SUPER LUMP (kg)
+                      </label>
+                      <input type="number" step="0.1" class="form-control form-control-custom" id="superLumpMeat" value="20.0" required>
+                      <small class="text-muted">Piezas grandes e intactas de carne blanca</small>
+                    </div>
+                    <!-- JUMBO -->
+                    <div class="mb-3">
+                      <label for="jumboMeat" class="form-label">
+                        <i class="fas fa-crown text-warning me-1"></i> JUMBO (kg)
+                      </label>
+                      <input type="number" step="0.1" class="form-control form-control-custom" id="jumboMeat" value="25.0" required>
+                      <small class="text-muted">Trozo más grandes e intactos</small>
+                    </div>
+                  </div>
+  
+                  <!-- Right Side -->
+                  <div class="col-md-6">
+                    <!-- CLAW MEAT -->
+                    <div class="mb-3">
+                      <label for="clawMeat" class="form-label">
+                        <i class="fas fa-hand-rock text-warning me-1"></i> CLAW MEAT (kg)
+                      </label>
+                      <input type="number" step="0.1" class="form-control form-control-custom" id="clawMeat" value="10.0" required>
+                      <small class="text-muted">Carne de las pinzas</small>
+                    </div>
+                    <!-- DESPERDICIO ORGÁNICO -->
+                    <div class="mb-3">
+                      <label for="organicWaste" class="form-label">
+                        <i class="fas fa-recycle text-danger me-1"></i> DESPERDICIO ORGÁNICO (kg)
+                      </label>
+                      <input type="number" step="0.1" class="form-control form-control-custom" id="organicWaste" value="30.0" required>
+                      <small class="text-muted">Material orgánico no aprovechable</small>
+                    </div>
+                    <!-- TOTAL PROCESADO -->
+                    <div class="mb-3">
+                      <label for="totalProcessed" class="form-label">
+                        <i class="fas fa-calculator text-info me-1"></i> TOTAL PROCESADO (kg)
+                      </label>
+                      <input type="number" step="0.1" class="form-control form-control-custom" id="totalProcessed" readonly>
+                      <small class="text-muted">Suma automática de todas las partes</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+                        <div class="mb-3">
+                            <label class="form-label">Notas de Calidad</label>
+                            <textarea class="form-control form-control-custom" id="qualityNotes" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-custom" onclick="savePhase2()">
+                        <i class="fas fa-save me-2"></i>Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Phase 3 Modal -->
+    <div class="modal fade" id="phase3Modal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content modal-custom">
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title">
+                        <i class="fas fa-cut me-2"></i>
+                        Fase 3: Separación de Carne y Clasificación
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="phase3Form">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Contenedor ID</label>
+                                    <input type="text" class="form-control form-control-custom" id="containerId3" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Tipo de Cangreja</label>
+                                    <input type="text" class="form-control form-control-custom" id="crabType3" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Peso Original (kg)</label>
+                                    <input type="text" class="form-control form-control-custom" id="originalWeight3" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Estado Original</label>
+                                    <input type="text" class="form-control form-control-custom" id="originalStatus3" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Proveedor</label>
+                                    <input type="text" class="form-control form-control-custom" id="provider3" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Fecha de Recepción</label>
+                                    <input type="text" class="form-control form-control-custom" id="receptionDate3" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Separación de Carne - 5 Partes -->
+                        <div class="card mb-3">
+                            <div class="card-header bg-success text-white">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-cut me-2"></i>
+                                    Separación de Carne - Estación de Procesamiento
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">
+                                                <i class="fas fa-star text-warning me-1"></i>
+                                                SPECIAL (kg) - Piezas pequeñas escamosas
+                                            </label>
+                                            <input type="number" step="0.1" class="form-control form-control-custom" id="specialMeat3" value="0.0" required>
+                                            <small class="text-muted">Carne blanca en piezas pequeñas y escamosas</small>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">
+                                                <i class="fas fa-star text-warning me-1"></i>
+                                                SUPER LUMP (kg) - Piezas grandes intactas
+                                            </label>
+                                            <input type="number" step="0.1" class="form-control form-control-custom" id="superLumpMeat3" value="0.0" required>
+                                            <small class="text-muted">Piezas más grandes e intactas de carne blanca</small>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">
+                                                <i class="fas fa-crown text-warning me-1"></i>
+                                                JUMBO (kg) - Trozos más grandes
+                                            </label>
+                                            <input type="number" step="0.1" class="form-control form-control-custom" id="jumboMeat3" value="0.0" required>
+                                            <small class="text-muted">Los trozos más grandes e intactos de carne blanca</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">
+                                                <i class="fas fa-hand-rock text-warning me-1"></i>
+                                                CLAW MEAT (kg) - Carne de pinzas
+                                            </label>
+                                            <input type="number" step="0.1" class="form-control form-control-custom" id="clawMeat3" value="0.0" required>
+                                            <small class="text-muted">Carne específicamente de las pinzas</small>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">
+                                                <i class="fas fa-recycle text-danger me-1"></i>
+                                                DESPERDICIO ORGÁNICO (kg)
+                                            </label>
+                                            <input type="number" step="0.1" class="form-control form-control-custom" id="organicWaste3" value="0.0" required>
+                                            <small class="text-muted">Material orgánico no aprovechable</small>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">
+                                                <i class="fas fa-calculator text-info me-1"></i>
+                                                TOTAL PROCESADO (kg)
+                                            </label>
+                                            <input type="number" step="0.1" class="form-control form-control-custom" id="totalProcessed3" readonly>
+                                            <small class="text-muted">Suma automática de todas las partes</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sección de Cálculo de Rendimiento y Clasificación -->
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <div class="card bg-light">
+                                    <div class="card-header bg-info text-white">
+                                        <h6 class="mb-0">
+                                            <i class="fas fa-calculator me-2"></i>
+                                            Cálculo de Rendimiento y Clasificación Automática
+                                        </h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="text-center">
+                                                    <h6 class="text-primary">Special</h6>
+                                                    <span id="phase3Special" class="badge bg-primary fs-6">0.00 kg</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="text-center">
+                                                    <h6 class="text-success">Super Lump</h6>
+                                                    <span id="phase3SuperLump" class="badge bg-success fs-6">0.00 kg</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="text-center">
+                                                    <h6 class="text-warning">Jumbo</h6>
+                                                    <span id="phase3Jumbo" class="badge bg-warning fs-6">0.00 kg</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="text-center">
+                                                    <h6 class="text-danger">Claw Meat</h6>
+                                                    <span id="phase3ClawMeat" class="badge bg-danger fs-6">0.00 kg</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col-md-4">
+                                                <div class="text-center">
+                                                    <h6 class="text-secondary">Total Carne</h6>
+                                                    <span id="phase3TotalMeat" class="badge bg-secondary fs-6">0.00 kg</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="text-center">
+                                                    <h6 class="text-dark">Desechos</h6>
+                                                    <span id="phase3Waste" class="badge bg-dark fs-6">0.00 kg</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="text-center">
+                                                    <h6 class="text-warning">Materia Prima Comestible</h6>
+                                                    <span id="phase3EdiblePercentage" class="badge bg-warning fs-6">0%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-12">
+                                                <div class="alert alert-info">
+                                                    <h6 class="mb-2">Clasificación Automática:</h6>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <span id="phase3Classification" class="badge fs-5">Pendiente</span>
+                                                        <button type="button" class="btn btn-sm btn-primary" onclick="calculatePhase3Classification()">
+                                                            <i class="fas fa-calculator me-1"></i>Calcular Clasificación
+                                                        </button>
+                                                    </div>
+                                                    <small id="phase3ClassificationReason" class="text-muted">
+                                                        La clasificación se determina automáticamente según el rendimiento de materia prima comestible
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Observaciones Finales</label>
+                            <textarea class="form-control form-control-custom" id="finalObservations3" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-custom" onclick="savePhase3()">
+                        <i class="fas fa-save me-2"></i>Guardar Clasificación Final
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="bootstrap-modal-fix.js"></script>
+    <script src="config.js"></script>
+    <script src="modal-accessibility.js"></script>
+    <script src="supervisor-script.js"></script>
+</body>
+</html> 

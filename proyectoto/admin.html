@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrador - Sistema Cangrejas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-crab me-2"></i>
+                Sistema Cangrejas - Administrador
+            </a>
+            <div class="navbar-nav ms-auto">
+                <span class="navbar-text me-3">
+                    <i class="fas fa-user me-1"></i>
+                    <span id="currentUser"></span>
+                    <span class="badge bg-light text-dark ms-2">Admin</span>
+                </span>
+                <button class="btn btn-outline-light btn-sm" onclick="logout()">
+                    <i class="fas fa-sign-out-alt me-1"></i>
+                    Cerrar Sesión
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Administrador -->
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="main-container p-4">
+                    <h2 class="text-center mb-4">
+                        <i class="fas fa-cogs me-2"></i>
+                        Panel de Administrador
+                    </h2>
+                    
+                    <!-- Estadísticas del Sistema -->
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="card text-center bg-primary text-white">
+                                <div class="card-body">
+                                    <i class="fas fa-users fa-2x mb-2"></i>
+                                    <h5>Usuarios Activos</h5>
+                                    <h3 id="activeUsers">0</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-center bg-success text-white">
+                                <div class="card-body">
+                                    <i class="fas fa-database fa-2x mb-2"></i>
+                                    <h5>Total Registros</h5>
+                                    <h3 id="totalRecords">0</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-center bg-warning text-white">
+                                <div class="card-body">
+                                    <i class="fas fa-exclamation-triangle fa-2x mb-2"></i>
+                                    <h5>Alertas</h5>
+                                    <h3 id="alerts">0</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card text-center bg-danger text-white">
+                                <div class="card-body">
+                                    <i class="fas fa-trash fa-2x mb-2"></i>
+                                    <h5>Datos Eliminados</h5>
+                                    <h3 id="deletedData">0</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Funciones de Administración -->
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="card">
+                                <div class="card-header bg-dark text-white">
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-tools me-2"></i>
+                                        Gestión del Sistema
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="d-grid gap-2">
+                                        <button class="btn btn-outline-primary" onclick="showData(1)">
+                                            <i class="fas fa-table me-2"></i>Ver Datos Fase 1
+                                        </button>
+                                        <button class="btn btn-outline-success" onclick="showData(2)">
+                                            <i class="fas fa-table me-2"></i>Ver Datos Fase 2
+                                        </button>
+                                        <button class="btn btn-outline-warning" onclick="showData(3)">
+                                            <i class="fas fa-table me-2"></i>Ver Datos Fase 3
+                                        </button>
+                                        <button class="btn btn-outline-info" onclick="generateSystemReport()">
+                                            <i class="fas fa-file-alt me-2"></i>Reporte del Sistema
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-4">
+                            <div class="card">
+                                <div class="card-header bg-danger text-white">
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-shield-alt me-2"></i>
+                                        Administración Avanzada
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="d-grid gap-2">
+                                        <button class="btn btn-outline-success" onclick="backupAllData()">
+                                            <i class="fas fa-save me-2"></i>Respaldo Completo
+                                        </button>
+                                        <button class="btn btn-outline-warning" onclick="restoreData()">
+                                            <i class="fas fa-undo me-2"></i>Restaurar Datos
+                                        </button>
+                                        <button class="btn btn-outline-danger" onclick="clearAllData()">
+                                            <i class="fas fa-trash me-2"></i>Limpiar Todos los Datos
+                                        </button>
+                                        <button class="btn btn-outline-info" onclick="exportAllData()">
+                                            <i class="fas fa-download me-2"></i>Exportar Todo
+                                        </button>
+                                        <button class="btn btn-outline-primary" onclick="openPhase1Review()">
+                                            <i class="fas fa-clipboard-check me-2"></i>Revisar Contenedores
+                                        </button>
+                                        
+                                        <!-- Menú desplegable para acciones de Fase 2 -->
+                                        <div class="dropdown">
+                                            <button class="btn btn-primary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="fas fa-cogs me-2"></i>Acciones de Fase 2
+                                            </button>
+                                            <ul class="dropdown-menu w-100">
+                                                <li><a class="dropdown-item" href="#" onclick="forcePhase2Access()">
+                                                    <i class="fas fa-rocket me-2"></i>FORZAR ACCESO FASE 2
+                                                </a></li>
+                                                <li><a class="dropdown-item" href="#" onclick="resetAndCreateTestData()">
+                                                    <i class="fas fa-refresh me-2"></i>Reiniciar y Crear Datos
+                                                </a></li>
+                                                <li><a class="dropdown-item" href="#" onclick="bulkApproveAll()">
+                                                    <i class="fas fa-check-double me-2"></i>Aprobar Todos los Contenedores
+                                                </a></li>
+                                                <li><a class="dropdown-item" href="#" onclick="emergencyPhase2Access()">
+                                                    <i class="fas fa-exclamation-triangle me-2"></i>Acceso de Emergencia
+                                                </a></li>
+                                                <li><a class="dropdown-item" href="#" onclick="createTestData()">
+                                                    <i class="fas fa-plus-circle me-2"></i>Crear Datos de Prueba
+                                                </a></li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li><a class="dropdown-item" href="#" onclick="diagnosePhase2Issue()">
+                                                    <i class="fas fa-stethoscope me-2"></i>Diagnosticar Fase 2
+                                                </a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Configuración del Sistema -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header bg-info text-white">
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-cog me-2"></i>
+                                        Configuración del Sistema
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h6>Parámetros del Sistema</h6>
+                                            <div class="mb-3">
+                                                <label class="form-label">Tiempo de Sesión (minutos)</label>
+                                                <input type="number" class="form-control" id="sessionTimeout" value="30">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Máximo de Intentos de Login</label>
+                                                <input type="number" class="form-control" id="maxLoginAttempts" value="3">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Longitud Mínima de Contraseña</label>
+                                                <input type="number" class="form-control" id="minPasswordLength" value="4">
+                                            </div>
+                                            <button class="btn btn-primary" onclick="saveSystemConfig()">
+                                                <i class="fas fa-save me-2"></i>Guardar Configuración
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6>Estadísticas del Sistema</h6>
+                                            <div id="systemStats">
+                                                <p><strong>Espacio Usado:</strong> <span id="storageUsed">0 KB</span></p>
+                                                <p><strong>Último Respaldo:</strong> <span id="lastBackup">Nunca</span></p>
+                                                <p><strong>Versión del Sistema:</strong> <span id="systemVersion">1.0.0</span></p>
+                                                <p><strong>Estado del Sistema:</strong> <span id="systemStatus" class="badge bg-success">Operativo</span></p>
+                                            </div>
+                                            <div class="mt-3">
+                                                <button class="btn btn-outline-secondary" onclick="checkSystemHealth()">
+                                                    <i class="fas fa-heartbeat me-2"></i>Verificar Salud del Sistema
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Logs del Sistema -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header bg-dark text-white">
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-list-alt me-2"></i>
+                                        Logs del Sistema
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-sm">
+                                            <thead class="table-dark">
+                                                <tr>
+                                                    <th>Fecha</th>
+                                                    <th>Usuario</th>
+                                                    <th>Acción</th>
+                                                    <th>Detalles</th>
+                                                    <th>Estado</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="systemLogs">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Phase 1 Review Modal -->
+    <div class="modal fade" id="phase1ReviewModal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content modal-custom">
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title">
+                        <i class="fas fa-clipboard-check me-2"></i>
+                        Revisión de Contenedores - Fase 1
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle me-2"></i>
+                                <strong>Administrador:</strong> Acceso completo para aprobar o rechazar contenedores.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-custom" id="qualityControlTable">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Contenedor</th>
+                                    <th>Proveedor</th>
+                                    <th>Tipo</th>
+                                    <th>Peso</th>
+                                    <th>Estado</th>
+                                    <th>Clasificación</th>
+                                    <th>Fecha</th>
+                                    <th>Estado Aprobación</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="qualityControlTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Tables Modal -->
+    <div class="modal fade" id="dataModal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content modal-custom">
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title">
+                        <i class="fas fa-table me-2"></i>
+                        Datos del Sistema
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-custom" id="dataTable">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Contenedor</th>
+                                    <th>Proveedor</th>
+                                    <th>Tipo</th>
+                                    <th>Peso</th>
+                                    <th>Estado</th>
+                                    <th>Clasificación</th>
+                                    <th>Fase</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dataTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="bootstrap-modal-fix.js"></script>
+    <script src="config.js"></script>
+    <script src="modal-accessibility.js"></script>
+    <script src="admin-script.js"></script>
+</body>
+</html> 

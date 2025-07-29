@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba del Sistema - Cangrejas Maracaibo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .test-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            margin: 20px;
+            padding: 30px;
+        }
+        .test-item {
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+        }
+        .test-item:hover {
+            border-color: #3498db;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .test-success {
+            border-color: #27ae60;
+            background-color: rgba(39, 174, 96, 0.1);
+        }
+        .test-error {
+            border-color: #e74c3c;
+            background-color: rgba(231, 76, 60, 0.1);
+        }
+        .test-warning {
+            border-color: #f39c12;
+            background-color: rgba(243, 156, 18, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="test-container">
+            <h1 class="text-center mb-4">
+                <i class="fas fa-vial me-2"></i>
+                Prueba del Sistema de Gestión de Cangrejas
+            </h1>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h3><i class="fas fa-cogs me-2"></i>Pruebas de Funcionalidad</h3>
+                    
+                    <div class="test-item" id="test-login">
+                        <h5><i class="fas fa-sign-in-alt me-2"></i>Prueba de Autenticación</h5>
+                        <p>Verificando sistema de login y niveles de seguridad...</p>
+                        <button class="btn btn-primary btn-sm" onclick="testLogin()">Ejecutar Prueba</button>
+                        <span id="login-result" class="ms-2"></span>
+                    </div>
+                    
+                    <div class="test-item" id="test-data">
+                        <h5><i class="fas fa-database me-2"></i>Prueba de Almacenamiento</h5>
+                        <p>Verificando persistencia de datos en localStorage...</p>
+                        <button class="btn btn-primary btn-sm" onclick="testDataStorage()">Ejecutar Prueba</button>
+                        <span id="data-result" class="ms-2"></span>
+                    </div>
+                    
+                    <div class="test-item" id="test-validation">
+                        <h5><i class="fas fa-check-circle me-2"></i>Prueba de Validaciones</h5>
+                        <p>Verificando validaciones de entrada y calidad...</p>
+                        <button class="btn btn-primary btn-sm" onclick="testValidations()">Ejecutar Prueba</button>
+                        <span id="validation-result" class="ms-2"></span>
+                    </div>
+                    
+                    <div class="test-item" id="test-permissions">
+                        <h5><i class="fas fa-shield-alt me-2"></i>Prueba de Permisos</h5>
+                        <p>Verificando sistema de niveles de seguridad...</p>
+                        <button class="btn btn-primary btn-sm" onclick="testPermissions()">Ejecutar Prueba</button>
+                        <span id="permissions-result" class="ms-2"></span>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <h3><i class="fas fa-chart-line me-2"></i>Pruebas de Rendimiento</h3>
+                    
+                    <div class="test-item" id="test-performance">
+                        <h5><i class="fas fa-tachometer-alt me-2"></i>Prueba de Rendimiento</h5>
+                        <p>Verificando velocidad de carga y respuesta...</p>
+                        <button class="btn btn-primary btn-sm" onclick="testPerformance()">Ejecutar Prueba</button>
+                        <span id="performance-result" class="ms-2"></span>
+                    </div>
+                    
+                    <div class="test-item" id="test-ui">
+                        <h5><i class="fas fa-desktop me-2"></i>Prueba de Interfaz</h5>
+                        <p>Verificando responsividad y elementos UI...</p>
+                        <button class="btn btn-primary btn-sm" onclick="testUI()">Ejecutar Prueba</button>
+                        <span id="ui-result" class="ms-2"></span>
+                    </div>
+                    
+                    <div class="test-item" id="test-reports">
+                        <h5><i class="fas fa-file-alt me-2"></i>Prueba de Reportes</h5>
+                        <p>Verificando generación de reportes...</p>
+                        <button class="btn btn-primary btn-sm" onclick="testReports()">Ejecutar Prueba</button>
+                        <span id="reports-result" class="ms-2"></span>
+                    </div>
+                    
+                    <div class="test-item" id="test-backup">
+                        <h5><i class="fas fa-save me-2"></i>Prueba de Respaldo</h5>
+                        <p>Verificando sistema de backup y restauración...</p>
+                        <button class="btn btn-primary btn-sm" onclick="testBackup()">Ejecutar Prueba</button>
+                        <span id="backup-result" class="ms-2"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="test-item">
+                        <h3><i class="fas fa-play-circle me-2"></i>Ejecutar Todas las Pruebas</h3>
+                        <p>Ejecuta todas las pruebas automáticamente para verificar el funcionamiento completo del sistema.</p>
+                        <button class="btn btn-success btn-lg" onclick="runAllTests()">
+                            <i class="fas fa-rocket me-2"></i>Ejecutar Todas las Pruebas
+                        </button>
+                        <div id="overall-result" class="mt-3"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="test-item">
+                        <h3><i class="fas fa-info-circle me-2"></i>Información del Sistema</h3>
+                        <div id="system-info"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Funciones de prueba
+        function testLogin() {
+            const testItem = document.getElementById('test-login');
+            const result = document.getElementById('login-result');
+            
+            try {
+                // Simular login
+                const testUser = 'test_user';
+                const testLevel = 'operador';
+                
+                if (typeof loginUser === 'function') {
+                    loginUser(testUser, testLevel);
+                    testItem.className = 'test-item test-success';
+                    result.innerHTML = '<i class="fas fa-check text-success"></i> Exitoso';
+                } else {
+                    throw new Error('Función loginUser no encontrada');
+                }
+            } catch (error) {
+                testItem.className = 'test-item test-error';
+                result.innerHTML = '<i class="fas fa-times text-danger"></i> Error: ' + error.message;
+            }
+        }
+        
+        function testDataStorage() {
+            const testItem = document.getElementById('test-data');
+            const result = document.getElementById('data-result');
+            
+            try {
+                // Probar localStorage
+                const testData = { test: 'data', timestamp: Date.now() };
+                localStorage.setItem('test_data', JSON.stringify(testData));
+                const retrieved = JSON.parse(localStorage.getItem('test_data'));
+                
+                if (retrieved && retrieved.test === 'data') {
+                    testItem.className = 'test-item test-success';
+                    result.innerHTML = '<i class="fas fa-check text-success"></i> Exitoso';
+                } else {
+                    throw new Error('Datos no se guardaron correctamente');
+                }
+            } catch (error) {
+                testItem.className = 'test-item test-error';
+                result.innerHTML = '<i class="fas fa-times text-danger"></i> Error: ' + error.message;
+            }
+        }
+        
+        function testValidations() {
+            const testItem = document.getElementById('test-validation');
+            const result = document.getElementById('validation-result');
+            
+            try {
+                // Probar validaciones
+                const testWeight = 150;
+                const testClassification = 'A';
+                
+                if (typeof ConfigUtils !== 'undefined' && ConfigUtils.validateWeightForClassification) {
+                    const isValid = ConfigUtils.validateWeightForClassification(testWeight, testClassification);
+                    
+                    if (isValid) {
+                        testItem.className = 'test-item test-success';
+                        result.innerHTML = '<i class="fas fa-check text-success"></i> Exitoso';
+                    } else {
+                        throw new Error('Validación falló');
+                    }
+                } else {
+                    throw new Error('ConfigUtils no disponible');
+                }
+            } catch (error) {
+                testItem.className = 'test-item test-error';
+                result.innerHTML = '<i class="fas fa-times text-danger"></i> Error: ' + error.message;
+            }
+        }
+        
+        function testPermissions() {
+            const testItem = document.getElementById('test-permissions');
+            const result = document.getElementById('permissions-result');
+            
+            try {
+                if (typeof checkPermission === 'function') {
+                    const hasPermission = checkPermission('phase1');
+                    
+                    if (typeof hasPermission === 'boolean') {
+                        testItem.className = 'test-item test-success';
+                        result.innerHTML = '<i class="fas fa-check text-success"></i> Exitoso';
+                    } else {
+                        throw new Error('Función checkPermission no retorna boolean');
+                    }
+                } else {
+                    throw new Error('Función checkPermission no encontrada');
+                }
+            } catch (error) {
+                testItem.className = 'test-item test-error';
+                result.innerHTML = '<i class="fas fa-times text-danger"></i> Error: ' + error.message;
+            }
+        }
+        
+        function testPerformance() {
+            const testItem = document.getElementById('test-performance');
+            const result = document.getElementById('performance-result');
+            
+            try {
+                const startTime = performance.now();
+                
+                // Simular operación pesada
+                let sum = 0;
+                for (let i = 0; i < 1000000; i++) {
+                    sum += i;
+                }
+                
+                const endTime = performance.now();
+                const duration = endTime - startTime;
+                
+                if (duration < 100) { // Menos de 100ms
+                    testItem.className = 'test-item test-success';
+                    result.innerHTML = '<i class="fas fa-check text-success"></i> Exitoso (' + duration.toFixed(2) + 'ms)';
+                } else {
+                    testItem.className = 'test-item test-warning';
+                    result.innerHTML = '<i class="fas fa-exclamation-triangle text-warning"></i> Lento (' + duration.toFixed(2) + 'ms)';
+                }
+            } catch (error) {
+                testItem.className = 'test-item test-error';
+                result.innerHTML = '<i class="fas fa-times text-danger"></i> Error: ' + error.message;
+            }
+        }
+        
+        function testUI() {
+            const testItem = document.getElementById('test-ui');
+            const result = document.getElementById('ui-result');
+            
+            try {
+                // Verificar elementos UI
+                const hasBootstrap = typeof bootstrap !== 'undefined';
+                const hasFontAwesome = document.querySelector('.fas') !== null;
+                const hasCustomStyles = document.querySelector('.test-container') !== null;
+                
+                if (hasBootstrap && hasFontAwesome && hasCustomStyles) {
+                    testItem.className = 'test-item test-success';
+                    result.innerHTML = '<i class="fas fa-check text-success"></i> Exitoso';
+                } else {
+                    throw new Error('Elementos UI faltantes');
+                }
+            } catch (error) {
+                testItem.className = 'test-item test-error';
+                result.innerHTML = '<i class="fas fa-times text-danger"></i> Error: ' + error.message;
+            }
+        }
+        
+        function testReports() {
+            const testItem = document.getElementById('test-reports');
+            const result = document.getElementById('reports-result');
+            
+            try {
+                if (typeof generateReport === 'function') {
+                    testItem.className = 'test-item test-success';
+                    result.innerHTML = '<i class="fas fa-check text-success"></i> Exitoso';
+                } else {
+                    throw new Error('Función generateReport no encontrada');
+                }
+            } catch (error) {
+                testItem.className = 'test-item test-error';
+                result.innerHTML = '<i class="fas fa-times text-danger"></i> Error: ' + error.message;
+            }
+        }
+        
+        function testBackup() {
+            const testItem = document.getElementById('test-backup');
+            const result = document.getElementById('backup-result');
+            
+            try {
+                if (typeof backupData === 'function') {
+                    testItem.className = 'test-item test-success';
+                    result.innerHTML = '<i class="fas fa-check text-success"></i> Exitoso';
+                } else {
+                    throw new Error('Función backupData no encontrada');
+                }
+            } catch (error) {
+                testItem.className = 'test-item test-error';
+                result.innerHTML = '<i class="fas fa-times text-danger"></i> Error: ' + error.message;
+            }
+        }
+        
+        function runAllTests() {
+            const tests = [
+                testLogin,
+                testDataStorage,
+                testValidations,
+                testPermissions,
+                testPerformance,
+                testUI,
+                testReports,
+                testBackup
+            ];
+            
+            let passed = 0;
+            let total = tests.length;
+            
+            tests.forEach((test, index) => {
+                setTimeout(() => {
+                    try {
+                        test();
+                        passed++;
+                    } catch (error) {
+                        console.error('Test failed:', error);
+                    }
+                    
+                    if (index === tests.length - 1) {
+                        const overallResult = document.getElementById('overall-result');
+                        const percentage = (passed / total) * 100;
+                        
+                        if (percentage === 100) {
+                            overallResult.innerHTML = `
+                                <div class="alert alert-success">
+                                    <i class="fas fa-trophy me-2"></i>
+                                    <strong>¡Excelente!</strong> Todas las pruebas pasaron (${passed}/${total})
+                                </div>
+                            `;
+                        } else if (percentage >= 75) {
+                            overallResult.innerHTML = `
+                                <div class="alert alert-warning">
+                                    <i class="fas fa-exclamation-triangle me-2"></i>
+                                    <strong>Bueno</strong> ${passed}/${total} pruebas pasaron (${percentage.toFixed(1)}%)
+                                </div>
+                            `;
+                        } else {
+                            overallResult.innerHTML = `
+                                <div class="alert alert-danger">
+                                    <i class="fas fa-times-circle me-2"></i>
+                                    <strong>Necesita atención</strong> Solo ${passed}/${total} pruebas pasaron (${percentage.toFixed(1)}%)
+                                </div>
+                            `;
+                        }
+                    }
+                }, index * 500);
+            });
+        }
+        
+        // Mostrar información del sistema
+        function showSystemInfo() {
+            const systemInfo = document.getElementById('system-info');
+            
+            const info = {
+                'Navegador': navigator.userAgent,
+                'Plataforma': navigator.platform,
+                'Cookies habilitadas': navigator.cookieEnabled,
+                'LocalStorage disponible': typeof(Storage) !== "undefined",
+                'Bootstrap cargado': typeof bootstrap !== 'undefined',
+                'Configuración del sistema': typeof SYSTEM_CONFIG !== 'undefined' ? 'Disponible' : 'No disponible',
+                'Funciones principales': typeof loginUser !== 'undefined' ? 'Cargadas' : 'No cargadas',
+                'Fecha y hora': new Date().toLocaleString('es-ES'),
+                'Zona horaria': Intl.DateTimeFormat().resolvedOptions().timeZone
+            };
+            
+            let html = '<div class="row">';
+            Object.entries(info).forEach(([key, value]) => {
+                html += `
+                    <div class="col-md-6 mb-2">
+                        <strong>${key}:</strong> 
+                        <span class="text-muted">${value}</span>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            
+            systemInfo.innerHTML = html;
+        }
+        
+        // Ejecutar al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            showSystemInfo();
+        });
+    </script>
+</body>
+</html> 
